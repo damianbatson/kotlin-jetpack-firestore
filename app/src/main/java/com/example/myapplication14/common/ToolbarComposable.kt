@@ -1,0 +1,53 @@
+package com.example.myapplication14.common
+
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+
+/**
+ * Set of widgets/views which will be used throughout the application.
+ * This is used to increase the code usability.
+ */
+
+@Composable
+fun BasicToolbar(@StringRes title: Int) {
+    TopAppBar(
+        title = { Text(stringResource(title)) },
+        backgroundColor = toolbarColor()
+    )
+}
+
+@Composable
+fun ActionToolbar(
+    @StringRes title: Int,
+    @DrawableRes endActionIcon: Int,
+    modifier: Modifier,
+    endAction: () -> Unit
+) {
+    TopAppBar(
+        title = { Text(stringResource(title)) },
+        backgroundColor = toolbarColor(),
+        actions = {
+            Box(modifier) {
+                IconButton(onClick = endAction) {
+                    Icon(painter = painterResource(endActionIcon), contentDescription = "Action")
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun toolbarColor(darkTheme: Boolean = isSystemInDarkTheme()): Color {
+    return if (darkTheme) MaterialTheme.colors.secondary else MaterialTheme.colors.primaryVariant
+}
+
+
+
